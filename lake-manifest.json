@@ -111,7 +111,7 @@
    "configFile": "lakefile.toml"
   }
  ],
- "name": "calibration-symmetry",
+ "name": "«calibration-symmetry»",
  "lakeDir": ".lake",
  "fixedToolchain": false
 }
