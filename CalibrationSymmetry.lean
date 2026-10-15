@@ -91,6 +91,28 @@ theorem two_point {Ω : Type*} [MeasurableSpace Ω] [PseudoEMetricSpace Y] [Meas
         rw [edist_comm (T x) a]
         exact edist_triangle a (T x) b
 
+/-- **Confusable pairs, chance form.** Two (session, latent) pairs that reveal the same laws, with
+different targets, cannot both be recognised by any measurable decoder of the session data. -/
+theorem pair_chance [MeasurableSpace Y] [MeasurableSingletonClass Y] {Ω : Type*}
+    [MeasurableSpace Ω] {M : S → Θ → Measure X} {p : ι → Θ → Θ} {φ : Θ → Y}
+    (J : Measure X × (ι → Measure X) → Measure Ω) {s s' : S} {θ θ' : Θ}
+    [IsProbabilityMeasure (J (reveal M p s θ))] (e : reveal M p s θ = reveal M p s' θ')
+    (hne : φ θ ≠ φ θ') {T : Ω → Y} (hT : Measurable T) :
+    J (reveal M p s θ) (T ⁻¹' {φ θ}) + J (reveal M p s' θ') (T ⁻¹' {φ θ'}) ≤ 1 := by
+  rw [← e]
+  exact chance_bound _ hT hne
+
+/-- **Confusable pairs, metric form.** -/
+theorem pair_two_point [PseudoEMetricSpace Y] [MeasurableSpace Y] [OpensMeasurableSpace Y]
+    {Ω : Type*} [MeasurableSpace Ω] {M : S → Θ → Measure X} {p : ι → Θ → Θ} {φ : Θ → Y}
+    (J : Measure X × (ι → Measure X) → Measure Ω) {s s' : S} {θ θ' : Θ}
+    [IsProbabilityMeasure (J (reveal M p s θ))] (e : reveal M p s θ = reveal M p s' θ')
+    {T : Ω → Y} (hT : Measurable T) :
+    edist (φ θ) (φ θ') ≤ ∫⁻ x, edist (T x) (φ θ) ∂J (reveal M p s θ)
+      + ∫⁻ x, edist (T x) (φ θ') ∂J (reveal M p s' θ') := by
+  rw [← e]
+  exact two_point _ hT _ _
+
 /-- **Impossibility.** If a target is not decodable, there are two sessions and two latents with
 different targets on which every decoder, using every recording the sessions produce, succeeds
 with probabilities summing to at most one. `J` builds the law of all session data from what

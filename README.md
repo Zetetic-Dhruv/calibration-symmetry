@@ -18,6 +18,7 @@ General statements (`BCIMetrology`):
 | `decodable_iff` | A target is decodable iff any two (session, latent) pairs that reveal the same laws carry the same target. |
 | `not_decodable_chance` | Otherwise, for some pair, any measurable decoder on all session data succeeds with probabilities summing to at most one. |
 | `not_decodable_two_point` | Metric form: the two expected errors sum to at least the distance between the targets. |
+| `pair_chance`, `pair_two_point` | The same bounds for any two (session, latent) pairs that reveal the same laws and carry different targets. |
 | `decodable_group_iff` | With a calibration group acting on recordings, decodability reduces to agreement on latents related by a group element that also maps each item's law to its counterpart. |
 | `Decodable.identifiable` | Phantoms do not make a non-identifiable target decodable. |
 | `decodable_of_base` | Phantoms whose joint stabilizer fixes all laws make all identifiable targets decodable. |
